@@ -40,13 +40,13 @@ end
 class CreateHeroesInventoryTable < ActiveRecord::Migration[5.0]
   def up
     create_table :hero_inventory, id: false do |i|
-      i.belongs_to :hero
-      i.belongs_to :game
-      i.belongs_to :item
+      i.belongs_to :game, index: true
+      i.belongs_to :hero, index: true
+      i.belongs_to :item, index: true
     end
 
-    add_foreign_key :hero_inventory, :heroes
     add_foreign_key :hero_inventory, :games
+    add_foreign_key :hero_inventory, :heroes
     add_foreign_key :hero_inventory, :items
   end
 
