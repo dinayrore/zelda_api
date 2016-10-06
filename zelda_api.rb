@@ -46,39 +46,33 @@ post '/api/hero/:name/inventory' do |hero|
 end
 
 # GET /api/hero - return individual/all characters as JSON
-get '/api/characters' do
-  name = params['name']
-  role = params['role']
+get '/api/' do
+  variable = params['variable']
 
-  if !name.nil? && !role.nil?
-    characters = Character.where(name: name, role: role)
-  elsif !name.nil?
-    characters = Character.where(name: name)
-  elsif !role.nil?
-    characters = Character.where(role: role)
+  if !variable.nil?
+    thing = Class.where(name: variable)
   else
-    characters = Character.all.order(role: :ASC)
+    thing = Class.all.order(role: :DESC)
   end
 
-  characters.to_json
+  thing.to_json
 end
 
 
 # PUT /api/characters - update a character, read request body as JSON
-put '/api/characters' do
-  name = params['name']
-  role = params['role']
-  new_name = params['new_name']
+put '/api/' do
+  variable = params['variable']
+  new_variable = params['new_variable']
   new_role = params['new_role']
 
-  characters = Character.find_by(name: name, role: role)
-  characters.update(name: new_name, role: new_role)
-  characters.to_json
+  thing = Class.find_by(name: variable)
+  thing.update(name: new_variable)
+  thing.to_json
   status 201
 end
 
 # DELETE /api/characters - delete task, return success/failure status code
-delete '/api/characters' do
-  characters = Character.find_by(name: params['name'], role: params['role'])
-  characters.destroy
+delete '/api/' do
+  thing = Class.find_by(name: params['name'])
+  thing.destroy
 end
